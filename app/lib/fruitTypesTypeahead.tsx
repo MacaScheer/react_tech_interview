@@ -82,18 +82,19 @@ export const typeaheadFruitColors = (prefix: string): Array<string> => {
     return FruitColorTrie.wordsWithPrefix(prefix, FruitColorTrie.root);
 }
 
-export const filterFruits = (name: string | null, color: string | null, weight: number | null): Array<Fruit | null> => {
+export const filterFruits = (name: string, color: string, weight: number | null): Array<Fruit | null> => {
     let filteredBy = Fruits;
-        if (name != null) {
-            let typeaheadNames = typeaheadFruitNames(name);
-            filteredBy = filteredBy.filter(fruit => typeaheadNames.indexOf(fruit.name) !== -1);
-        }
-        if (color != null) {
-            let typeaheadColors = typeaheadFruitColors(color)
-            filteredBy = filteredBy.filter(fruit => typeaheadColors.indexOf(fruit.primaryColor) !== -1);
-        }
-        if (weight != null) {
-            filteredBy = filteredBy.filter(fruit => fruit.averageWeightInGrams === weight);
-        }
+    let typeaheadNames = typeaheadFruitNames(name);
+    let typeaheadColors = typeaheadFruitColors(color)
+    filteredBy = filteredBy.filter(fruit => {
+            if (typeaheadNames.indexOf(fruit.name) !== -1 &&
+                typeaheadColors.indexOf(fruit.primaryColor) !== -1
+            ) {
+                return fruit;
+            }
+    });
+    if (weight != null) {
+        filteredBy = filteredBy.filter(fruit => fruit.averageWeightInGrams === weight);
+    }
     return filteredBy;
 }

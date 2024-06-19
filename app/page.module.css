@@ -228,3 +228,19 @@
     transform: rotate(0deg);
   }
 }
+
+.fruitTable {
+  display: flex;
+  flex-direction: column;
+}
+
+.fruitRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 1fr;
+}
+
+.fruitInputs {
+  flex-direction: column;
+  margin-bottom: 5px;
+}
